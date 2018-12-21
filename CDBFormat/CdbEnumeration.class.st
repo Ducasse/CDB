@@ -73,6 +73,24 @@ CdbEnumeration >> initialize: filepath [
 	pos := 2048
 ]
 
+{ #category : #initalize }
+CdbEnumeration >> initializeWithByteArray: aByteArray [
+	| A B C D |
+	in := ZnBufferedReadStream on: aByteArray.
+	"Read the end-of-data value"
+	A := in next bitAnd: 16rFF.
+	B := (in next bitAnd: 16rff) << 8.
+	C := (in next bitAnd: 16rff) << 16.
+	D := (in next bitAnd: 16rff) << 24.
+	eod := A bitOr: (B bitOr: (C bitOr: D)).
+
+	"Skip the rest of the hashtable"
+	in skip: 2048 - 4.
+
+	"Current data pointer"
+	pos := 2048
+]
+
 { #category : #'modal control' }
 CdbEnumeration >> nextElement [
 	"Returns the next data element in the CDB file"

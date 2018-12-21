@@ -36,8 +36,8 @@ CDBEnumTest >> testGeneric [
 	i := 1.
 	[ cdbEnum hasMoreElements ]
 		whileTrue: [ result := cdbEnum nextElement.
-			self assert: (keys at: i) equals: result getKey asString.
-			self assert: (values at: i) equals: result getData asString.
+			self assert: (keys at: i) equals: result key asString.
+			self assert: (values at: i) equals: result data asString.
 			i := i + 1 ]
 ]
 
@@ -53,8 +53,8 @@ CDBEnumTest >> testInsertOneChar [
 	
 	cdbEnum := Cdb elements: 'test.cdb'.
 	result := cdbEnum nextElement.
-	self assert: 'a' = result getKey asString.
-	self assert: 'toto' = result getData asString.
+	self assert: 'a' = result key asString.
+	self assert: 'toto' = result data asString.
 ]
 
 { #category : #tests }
@@ -76,8 +76,8 @@ CDBEnumTest >> testOneEnumaration [
  	[ cdbEnum hasMoreElements ] 
       whileTrue: [
 			  result := cdbEnum nextElement.
-			  self assert: (keys at: i) = result getKey asString.
-			  self assert: (values at: i) = result getData asString.
+			  self assert: (keys at: i) = result key asString.
+			  self assert: (values at: i) = result data asString.
 			  i := i + 1.
 	   ]
 ]

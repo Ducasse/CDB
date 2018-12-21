@@ -9,13 +9,24 @@ Class {
 
 { #category : #'as yet unclassified' }
 MyPlayground >> myPlaygroundCdbEnum [
-	"comment stating purpose of message"
 
 	| em cdbElt | 
 	em := Cdb elements: 'test.cdb'.
 	[ em hasMoreElements ] whileTrue: [ 
 		cdbElt := em nextElement.
-		Transcript show: 'Loop elements : Value : '; show: (cdbElt getData) asString; show: ' Key : '; show: (cdbElt getKey) asString; cr.
+		Transcript show: 'Value : '; show: cdbElt data asString; show: ' Key : '; show: cdbElt key asString; cr.
+   ].
+]
+
+{ #category : #'as yet unclassified' }
+MyPlayground >> myPlaygroundCdbEnum2 [
+
+	| em cdbElt | 
+	em := CdbEnumeration new 
+				initializeWithByteArray: NewCDBTest decodedCDBFileContents readStream; yourself.
+	[ em hasMoreElements ] whileTrue: [ 
+		cdbElt := em nextElement.
+		Transcript show: 'Value : '; show: cdbElt data asString; show: ' Key : '; show: cdbElt key asString; cr.
    ].
 ]
 
@@ -37,8 +48,10 @@ MyPlayground >> myPlaygroundCdbMake [
 	| maker |
 	maker := CdbMake new.
 	maker start: 'test.cdb'.
-	maker addKey: ('three' asByteArray) value: ('Golden State Warriors' asByteArray).
-	maker addKey: ('four' asByteArray) value: ('Record of Chicago Bulls' asByteArray). 
+	
+	maker addKey: 'three' asByteArray value: 'Golden State Warriors' asByteArray.
+	maker addKey: 'four' asByteArray value: 'Record of Chicago Bulls' asByteArray. 
+	maker addKey: 'one' asByteArray value: 'Rambo' asByteArray. 
 	maker finish.
 ]
 

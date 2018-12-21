@@ -22,9 +22,9 @@ Cdb class >> elements: filepath [
  ^ CdbEnumeration new: filepath.
 ]
 
-{ #category : #new }
-Cdb class >> new: aString [
-	 ^ self new
+{ #category : #'instance creation' }
+Cdb class >> fileName: aString [
+	^ self new
 		initialize: aString;
 		yourself
 ]
@@ -35,6 +35,11 @@ Cdb >> close [
 	
 	file close.
 	file := nil.
+]
+
+{ #category : #accessing }
+Cdb >> fileName: aString [
+	file := File named: aString asFileReference fullName
 ]
 
 { #category : #'modal control' }
@@ -118,65 +123,60 @@ Cdb >> ifActionForLoopEqualZero: key [
 
 { #category : #initialize }
 Cdb >> initialize: filepath [
-	| table offset pos len  A B C D ia ib iecart| 
-	super initialize.
+	| table offset pos len A B C D ia ib iecart |
 	"Creates an instance of the Cdb class and loads the given CDB file."
 
 	"Open the CDB file"
 	file := FileStream readOnlyFileNamed: filepath.
 	file binary.
-	
+
 	" Read and parse the slot table"
 	table := ByteArray new: 2048.
-	file readInto: table startingAt: 1 count: 2048. 
-	
-	slotTable := IntegerArray new: (256*2).
+	file readInto: table startingAt: 1 count: 2048.
+	slotTable := IntegerArray new: 256 * 2.
 	offset := 1.
 	iecart := 0.
-	1 to: 256 do: [ :i|
-		A :=  (table at: offset) bitAnd: 16rff.
-		offset := offset+1.
-		B := ((table at: offset) bitAnd: 16rff) <<  8.
-		offset := offset +1.
-		C := ((table at: offset) bitAnd: 16rff) <<  16.
-		offset := offset+1.
-		D := ((table at: offset) bitAnd: 16rff) <<  24. 
-		offset := offset+1.
-		pos := A bitOr: (B bitOr: (C bitOr: D)). 
-				
-		"Second stape"
+	1 to: 256 do: [ :i | 
 		A := (table at: offset) bitAnd: 16rff.
-		offset := offset+1.
-		B := ((table at: offset) bitAnd: 16rff) <<  8.
-		offset := offset +1.
-		C := ((table at: offset) bitAnd: 16rff) <<  16.
-		offset := offset+1.
-		D := ((table at: offset) bitAnd: 16rff) <<  24.
-		offset := offset+1.
+		offset := offset + 1.
+		B := ((table at: offset) bitAnd: 16rff) << 8.
+		offset := offset + 1.
+		C := ((table at: offset) bitAnd: 16rff) << 16.
+		offset := offset + 1.
+		D := ((table at: offset) bitAnd: 16rff) << 24.
+		offset := offset + 1.
+		pos := A bitOr: (B bitOr: (C bitOr: D)).
+
+		"Second step"
+		A := (table at: offset) bitAnd: 16rff.
+		offset := offset + 1.
+		B := ((table at: offset) bitAnd: 16rff) << 8.
+		offset := offset + 1.
+		C := ((table at: offset) bitAnd: 16rff) << 16.
+		offset := offset + 1.
+		D := ((table at: offset) bitAnd: 16rff) << 24.
+		offset := offset + 1.
 		len := A bitOr: (B bitOr: (C bitOr: D)).
-		
-		"Third stape"
+
+		"Third step"
 		ia := i + iecart.
-		ib := ia +1.
+		ib := ia + 1.
 		iecart := iecart + 1.
 		slotTable at: ia put: pos.
-		slotTable at: ib put: len.
-		"Test static: entre java sysout et pharo Transcript"
-	].
+		slotTable at: ib put: len
+		]
 ]
 
 { #category : #'modal control' }
 Cdb >> readUnsignedByteModulate [
-	"Read an usnsigned byte"
+	"Read an unsigned byte"
+	
  	| h a b c d |
-	
 	h := 0.
-
 	a := file next.
-	b := (file next) << 8.
-	c := (file next) << 16.
-	d:= (file next) << 24.
-	
+	b := file next << 8.
+	c := file next << 16.
+	d := file next << 24.
 	h := a bitOr: (b bitOr: (c bitOr: d)). 
 	^ h
 	
@@ -184,12 +184,9 @@ Cdb >> readUnsignedByteModulate [
 
 { #category : #'modal control' }
 Cdb >> searchMatching: k and: key [
-	"Search "
-	1 to: k size do: [ :i| 
-		((k at: i) = (key at: i)) 
-			ifFalse: [ 
-				^ false.
-			].
-	].
+
+	1 to: k size do: [ :i | 
+		(k at: i) = (key at: i)
+			ifFalse: [ ^ false ] ].
 	^ true
 ]

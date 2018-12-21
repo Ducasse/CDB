@@ -14,24 +14,24 @@ Class {
 { #category : #new }
 CdbElement class >> new: aKey and: aData [
 	 ^ self new
-		initialize: aKey and: aData;
+		setKey: aKey data: aData;
 		yourself
 ]
 
 { #category : #getter }
-CdbElement >> getData [
+CdbElement >> data [
 
 	^ data
 ]
 
 { #category : #getter }
-CdbElement >> getKey [
+CdbElement >> key [
 
 	^ key
 ]
 
 { #category : #initalize }
-CdbElement >> initialize: k and: d [
+CdbElement >> setKey: k data: d [
 	"Creates an instance of the CdbElement class and initializes it with the given key and data values."
 
 	key := k.

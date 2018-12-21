@@ -6,8 +6,8 @@ Class {
 
 { #category : #find }
 CDBTest >> testFind [
-	"comment stating purpose of message"
-	|cdb   i maker  keys values result|
+
+	|cdb i maker  keys values result|
 	
 	keys := #('three' 'four').
 	values := #('Golden State Warriors' 'Record of Chicago Bulls').
@@ -17,7 +17,7 @@ CDBTest >> testFind [
 	maker addKey: (keys at: 1) value: (values at: 1).
 	maker addKey: (keys at: 2) value: (values at: 2).
 	maker finish.
-	cdb := Cdb new:'test.cdb'.
+	cdb := Cdb fileName: 'test.cdb'.
 	i := 1.
 	[ i<= 2 ]
         whileTrue: [  

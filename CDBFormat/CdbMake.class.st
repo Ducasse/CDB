@@ -167,9 +167,9 @@ CdbMake >> writeLeInt: v [
 	
 	|a b c d|
 	a := v bitAnd: 16rff.
-	b := (v >> 8) bitAnd: 16rff.
-	c := (v >> 16) bitAnd: 16rff.
-	d := (v >> 24) bitAnd: 16rff.
+	b := v >> 8 bitAnd: 16rff.
+	c := v >> 16 bitAnd: 16rff.
+	d := v >> 24 bitAnd: 16rff.
 	
 	file nextBytesPutAll: a asByteArray.
 	file nextBytesPutAll: b asByteArray.
