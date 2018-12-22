@@ -31,6 +31,17 @@ MyPlayground >> myPlaygroundCdbEnum2 [
 ]
 
 { #category : #'as yet unclassified' }
+MyPlayground >> myPlaygroundCdbEnum3 [
+
+	| em cdbElt | 
+	em := Cdb elements: 'myFromPythonImplementation.cdb'.
+	[ em hasMoreElements ] whileTrue: [ 
+		cdbElt := em nextElement.
+		Transcript show: 'Value : '; show: cdbElt data asString; show: ' Key : '; show: cdbElt key asString; cr.
+   ].
+]
+
+{ #category : #'as yet unclassified' }
 MyPlayground >> myPlaygroundCdbFind [
 	
 	|cdb key r|
@@ -39,6 +50,17 @@ MyPlayground >> myPlaygroundCdbFind [
 	r := cdb find: key.
 	cdb close.
 	self assert: r asString equals: 'rambo'
+]
+
+{ #category : #'as yet unclassified' }
+MyPlayground >> myPlaygroundCdbFind2 [
+	
+	|cdb key r|
+	cdb := Cdb fileName: 'testTwoSimilarKeys.cdb'..
+	key := 'one'.
+	r := cdb find: key.
+	cdb close.
+	r asString = 'rambo'
 ]
 
 { #category : #'as yet unclassified' }

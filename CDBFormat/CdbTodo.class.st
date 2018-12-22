@@ -4,6 +4,8 @@
 - clean file and more. 
 - turn my playground into tests
 
+- make dump 
+
 "
 Class {
 	#name : #CdbTodo,

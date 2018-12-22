@@ -37,6 +37,13 @@ NewCDBTest class >> encodedCDBFileContents [
 ]
 
 { #category : #tests }
+NewCDBTest >> testHash [ 
+
+	self assert: #[1] cdbHash equals: 177572.
+	self assert: #[11] cdbHash equals: 177582.
+]
+
+{ #category : #tests }
 NewCDBTest >> testNextElement [
 
 	| em element |
