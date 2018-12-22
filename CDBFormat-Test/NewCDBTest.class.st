@@ -39,8 +39,21 @@ NewCDBTest class >> encodedCDBFileContents [
 { #category : #tests }
 NewCDBTest >> testReadFile [
 
+	| em element |
 	testingWorkingDirectory := FileSystem memory workingDirectory.
 	(testingWorkingDirectory / self class cdbFile)
 		writeStreamDo: [ :stream | 
-			stream nextPutAll: self class cdbFileContents ]
+			stream nextPutAll: self class encodedCDBFileContents ].
+	(testingWorkingDirectory / self class cdbFile).
+	em := CdbEnumeration new.
+
+	em initializeWithByteArray: (testingWorkingDirectory / self class cdbFile) contents base64Decoded.
+	element := em nextElement.
+	self assert: element key asString equals: 'three'.
+	self assert: element  data asString equals: 'Golden State Warriors'.
+	
+	element := em nextElement.
+	self assert: element key asString equals: 'four'.
+	self assert: element  data asString equals: 'Record of Chicago Bulls'.
+
 ]

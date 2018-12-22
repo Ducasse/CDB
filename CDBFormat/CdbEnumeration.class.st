@@ -76,7 +76,7 @@ CdbEnumeration >> initialize: filepath [
 { #category : #initalize }
 CdbEnumeration >> initializeWithByteArray: aByteArray [
 	| A B C D |
-	in := ZnBufferedReadStream on: aByteArray.
+	in := ZnBufferedReadStream on: aByteArray readStream.
 	"Read the end-of-data value"
 	A := in next bitAnd: 16rFF.
 	B := (in next bitAnd: 16rff) << 8.
