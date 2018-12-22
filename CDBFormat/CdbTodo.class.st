@@ -8,5 +8,5 @@
 Class {
 	#name : #CdbTodo,
 	#superclass : #Object,
-	#category : #CDBFormat
+	#category : #'CDBFormat-NewCore'
 }

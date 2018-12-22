@@ -18,7 +18,7 @@ Class {
 { #category : #new }
 CdbEnumeration class >> new: aFilepath [
 	 ^ self new
-		initialize: aFilepath;
+		initializeWithFilePath: aFilepath;
 		yourself
 ]
 
@@ -55,16 +55,19 @@ CdbEnumeration >> in [
 
 { #category : #initalize }
 CdbEnumeration >> initialize: filepath [
-	| A B C D |
-	"Open the data file"
-	in := FileStream readOnlyFileNamed: filepath.
-	in binary.
-	"Read the end-of-data value"
-	A := in next bitAnd: 16rFF.
-	B := (in next bitAnd: 16rff) << 8.
-	C := (in next bitAnd: 16rff) << 16.
-	D := (in next bitAnd: 16rff) << 24.
-	eod := A bitOr: (B bitOr: (C bitOr: D)).
+	
+	self initializeWithByteArray: filepath 
+]
+
+{ #category : #initalize }
+CdbEnumeration >> initializeRawValue [
+
+	| a b c d |
+	a := in next bitAnd: 16rFF.
+	b := (in next bitAnd: 16rff) << 8.
+	c := (in next bitAnd: 16rff) << 16.
+	d := (in next bitAnd: 16rff) << 24.
+	eod := a bitOr: (b bitOr: (c bitOr: d)).
 
 	"Skip the rest of the hashtable"
 	in skip: 2048 - 4.
@@ -75,20 +78,16 @@ CdbEnumeration >> initialize: filepath [
 
 { #category : #initalize }
 CdbEnumeration >> initializeWithByteArray: aByteArray [
-	| A B C D |
+
 	in := ZnBufferedReadStream on: aByteArray readStream.
-	"Read the end-of-data value"
-	A := in next bitAnd: 16rFF.
-	B := (in next bitAnd: 16rff) << 8.
-	C := (in next bitAnd: 16rff) << 16.
-	D := (in next bitAnd: 16rff) << 24.
-	eod := A bitOr: (B bitOr: (C bitOr: D)).
+	self initializeRawValue
+]
 
-	"Skip the rest of the hashtable"
-	in skip: 2048 - 4.
-
-	"Current data pointer"
-	pos := 2048
+{ #category : #initalize }
+CdbEnumeration >> initializeWithFilePath: filepath [
+	
+	in := (File named: filepath asFileReference fullName) readStream.
+	self initializeRawValue
 ]
 
 { #category : #'modal control' }
@@ -135,4 +134,12 @@ CdbEnumeration >> readLeInt [
 	D := (in next bitAnd: 16rFF) << 24.
 	
 	^ A bitOr: (B bitOr: (C bitOr: D)) 
+]
+
+{ #category : #initalize }
+CdbEnumeration >> setPath: filepath [
+	
+	in := FileStream readOnlyFileNamed: filepath.
+	in binary.
+
 ]

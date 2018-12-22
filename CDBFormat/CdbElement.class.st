@@ -8,7 +8,7 @@ Class {
 		'data',
 		'key'
 	],
-	#category : #CDBFormat
+	#category : #'CDBFormat-NewCore'
 }
 
 { #category : #new }

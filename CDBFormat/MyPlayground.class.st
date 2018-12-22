@@ -11,7 +11,7 @@ Class {
 MyPlayground >> myPlaygroundCdbEnum [
 
 	| em cdbElt | 
-	em := Cdb elements: 'test.cdb'.
+	em := Cdb elements: 'testTwoSimilarKeys.cdb'.
 	[ em hasMoreElements ] whileTrue: [ 
 		cdbElt := em nextElement.
 		Transcript show: 'Value : '; show: cdbElt data asString; show: ' Key : '; show: cdbElt key asString; cr.
@@ -32,13 +32,13 @@ MyPlayground >> myPlaygroundCdbEnum2 [
 
 { #category : #'as yet unclassified' }
 MyPlayground >> myPlaygroundCdbFind [
-	"comment stating purpose of message"
+	
 	|cdb key r|
-	cdb := Cdb new: 'test.cdb'.
+	cdb := Cdb fileName: 'test.cdb'.
 	key := 'one' asByteArray.
 	r := cdb find: key.
 	cdb close.
-	r asString 
+	self assert: r asString equals: 'rambo'
 ]
 
 { #category : #'as yet unclassified' }
@@ -47,28 +47,10 @@ MyPlayground >> myPlaygroundCdbMake [
 
 	| maker |
 	maker := CdbMake new.
-	maker start: 'test.cdb'.
-	
+	maker start: 'testTwoSimilarKeys.cdb'.
+	maker addKey: 'one' asByteArray value: 'Rambo1' asByteArray. 
 	maker addKey: 'three' asByteArray value: 'Golden State Warriors' asByteArray.
 	maker addKey: 'four' asByteArray value: 'Record of Chicago Bulls' asByteArray. 
-	maker addKey: 'one' asByteArray value: 'Rambo' asByteArray. 
+	maker addKey: 'one' asByteArray value: 'Rambo2' asByteArray. 
 	maker finish.
-]
-
-{ #category : #'as yet unclassified' }
-MyPlayground >> myPlaygroundTestFileNext [
-	"comment stating purpose of message"
-
-	| fileW fileR |
-	fileW := FileStream forceNewFileNamed: 'next.test'.
-	fileW binary.
-	fileW next: 15.
-	fileW close.
-	
-	fileR := FileStream fileNamed: 'next.test'.
-	
-	fileR binary.
-	fileR next.
-	fileR close.
-	
 ]

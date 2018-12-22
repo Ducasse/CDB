@@ -145,7 +145,6 @@ CdbMake >> posplus: count [
 { #category : #starting }
 CdbMake >> start: filepath [
 	"Begins the constant database creation process."
-	"Initialize the class."
 	hashPointers  := LinkedList new.
 	tableCount := IntegerArray new: 256.
 	tableStart := IntegerArray new: 256.
