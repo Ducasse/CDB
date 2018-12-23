@@ -1,7 +1,21 @@
 "
-An Enumeration containing a CdbElement for each entry in the constant database.
-	parameter:  filepath The CDB file to read.
-	Return:  An Enumeration containing a CdbElement for each entry in the constant database.
+| maker |
+maker := CDBCreator new.
+maker start: 'PharoAllClasses.cdb'.
+Smalltalk allClasses do:
+		[ :c | 
+			c selectors do: [ :s |
+					maker addKey: c name, '>>', s asString value: (c >>s) sourceCode ].
+			c class selectors do: [ :s |
+					maker addKey: c class name, '>>', s asString value: (c class >>s) sourceCode ] ].
+maker finish.
+
+
+| em |
+em := CDBDumper new.
+em initializeWithFilePath: 'PharoAllClasses.cdb'.
+em dump
+	
 
 "
 Class {
