@@ -5,7 +5,7 @@ An Enumeration containing a CdbElement for each entry in the constant database.
 
 "
 Class {
-	#name : #CdbEnumeration,
+	#name : #OldCdbEnumeration,
 	#superclass : #Object,
 	#instVars : [
 		'in',
@@ -16,20 +16,20 @@ Class {
 }
 
 { #category : #new }
-CdbEnumeration class >> new: aFilepath [
+OldCdbEnumeration class >> new: aFilepath [
 	 ^ self new
 		initializeWithFilePath: aFilepath;
 		yourself
 ]
 
 { #category : #'modal control' }
-CdbEnumeration >> finalize [
+OldCdbEnumeration >> finalize [
 
 	in close
 ]
 
 { #category : #inspection }
-CdbEnumeration >> gtInspectorDetailsIn: composite [
+OldCdbEnumeration >> gtInspectorDetailsIn: composite [
 	<gtInspectorPresentationOrder: 30>
 	^ composite table
 		title: [ 'Details' ];
@@ -41,26 +41,26 @@ CdbEnumeration >> gtInspectorDetailsIn: composite [
 ]
 
 { #category : #'modal control' }
-CdbEnumeration >> hasMoreElements [
+OldCdbEnumeration >> hasMoreElements [
 	"Returns true,if there are more elements in the constant database, false otherwise."
 
 	^ pos < eod.
 ]
 
 { #category : #accessing }
-CdbEnumeration >> in [
+OldCdbEnumeration >> in [
 
 	^ in
 ]
 
 { #category : #initalize }
-CdbEnumeration >> initialize: filepath [
+OldCdbEnumeration >> initialize: filepath [
 	
 	self initializeWithByteArray: filepath 
 ]
 
 { #category : #initalize }
-CdbEnumeration >> initializeRawValue [
+OldCdbEnumeration >> initializeRawValue [
 
 	| a b c d |
 	a := in next bitAnd: 16rFF.
@@ -77,21 +77,21 @@ CdbEnumeration >> initializeRawValue [
 ]
 
 { #category : #initalize }
-CdbEnumeration >> initializeWithByteArray: aByteArray [
+OldCdbEnumeration >> initializeWithByteArray: aByteArray [
 
 	in := ZnBufferedReadStream on: aByteArray readStream.
 	self initializeRawValue
 ]
 
 { #category : #initalize }
-CdbEnumeration >> initializeWithFilePath: filepath [
+OldCdbEnumeration >> initializeWithFilePath: filepath [
 	
 	in := (File named: filepath asFileReference fullName) readStream.
 	self initializeRawValue
 ]
 
 { #category : #'modal control' }
-CdbEnumeration >> nextElement [
+OldCdbEnumeration >> nextElement [
 	"Returns the next data element in the CDB file"
 	
 	| klen dlen key off count data |
@@ -125,7 +125,7 @@ CdbEnumeration >> nextElement [
 ]
 
 { #category : #'modal control' }
-CdbEnumeration >> readLeInt [
+OldCdbEnumeration >> readLeInt [
 	"Reads a little-endian integer from: in"
 	|A B C D|
 	A :=  in next bitAnd: 16rFF.
@@ -137,7 +137,7 @@ CdbEnumeration >> readLeInt [
 ]
 
 { #category : #initalize }
-CdbEnumeration >> setPath: filepath [
+OldCdbEnumeration >> setPath: filepath [
 	
 	in := FileStream readOnlyFileNamed: filepath.
 	in binary.

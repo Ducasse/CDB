@@ -2,7 +2,7 @@
 CdbMake implements the database-creation side of
 "
 Class {
-	#name : #CdbMake,
+	#name : #OldCdbMake,
 	#superclass : #Object,
 	#instVars : [
 		'file',
@@ -15,7 +15,7 @@ Class {
 }
 
 { #category : #'modal control' }
-CdbMake >> addKey: keyOne value: dataOne [
+OldCdbMake >> addKey: keyOne value: dataOne [
 	"Adds a key to the constant database"
 	
 	| hash itc key data |
@@ -49,7 +49,7 @@ CdbMake >> addKey: keyOne value: dataOne [
 ]
 
 { #category : #'modal control' }
-CdbMake >> finish [
+OldCdbMake >> finish [
 	"Finalizes the constant database."
 	| curEntry slotPointers slotTable |
 	
@@ -130,7 +130,7 @@ CdbMake >> finish [
 ]
 
 { #category : #'modal control' }
-CdbMake >> posplus: count [
+OldCdbMake >> posplus: count [
 	"Advances the file pointer by count bytes, throwing an exception if doing so would cause the file to grow beyond 4 GB."
 
 	| newpos |
@@ -141,7 +141,7 @@ CdbMake >> posplus: count [
 ]
 
 { #category : #starting }
-CdbMake >> start: filepath [
+OldCdbMake >> start: filepath [
 	"Begins the constant database creation process."
 	hashPointers  := LinkedList new.
 	tableCount := IntegerArray new: 256.
@@ -159,7 +159,7 @@ CdbMake >> start: filepath [
 ]
 
 { #category : #'modal control' }
-CdbMake >> writeLeInt: v [
+OldCdbMake >> writeLeInt: v [
 	"Writes an integer in little-endian format to the constant database at the current file offset."
 	
 	| a b c d |

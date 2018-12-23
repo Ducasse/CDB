@@ -48,7 +48,7 @@ NewCDBTest >> testHash [
 NewCDBTest >> testNextElement [
 
 	| em element |
-	em := CdbEnumeration new.
+	em := OldCdbEnumeration new.
 	em initializeWithByteArray: self class cdbFileContents base64Decoded readStream.
 	element := em nextElement.
 	self assert: element key asString equals: 'three'.
@@ -69,7 +69,7 @@ NewCDBTest >> testReadFile [
 		writeStreamDo: [ :stream | 
 			stream nextPutAll: self class encodedCDBFileContents ].
 		
-	em := CdbEnumeration new.
+	em := OldCdbEnumeration new.
 	em initializeWithByteArray: (testingWorkingDirectory / self class cdbFile) contents base64Decoded.
 	element := em nextElement.
 	self assert: element key asString equals: 'three'.
@@ -90,7 +90,7 @@ NewCDBTest >> testReadFile2 [
 		writeStreamDo: [ :stream | 
 			stream nextPutAll: self class encodedCDBFileContents ].
 		
-	em := CdbEnumeration new.
+	em := OldCdbEnumeration new.
 	em initialize: (testingWorkingDirectory / self class cdbFile) contents base64Decoded.
 	element := em nextElement.
 	self assert: element key asString equals: 'three'.
@@ -106,7 +106,7 @@ NewCDBTest >> testReadFile2 [
 NewCDBTest >> testReadFromByteArray [
 
 	| em element |
-	em := CdbEnumeration new.
+	em := OldCdbEnumeration new.
 	em initializeWithByteArray: self class cdbFileContents base64Decoded readStream.
 	element := em nextElement.
 	self assert: element key asString equals: 'three'.

@@ -10,7 +10,7 @@ Class {
 { #category : #'as yet unclassified' }
 MyPlayground >> myPlaygroundCdbEnum2 [
 	| em cdbElt |
-	em := CdbEnumeration new
+	em := OldCdbEnumeration new
 		initializeWithByteArray: NewCDBTest decodedCDBFileContents readStream;
 		yourself.
 	[ em hasMoreElements ]
@@ -24,7 +24,7 @@ MyPlayground >> myPlaygroundCdbEnum2 [
 MyPlayground >> myPlaygroundCdbFind [
 	
 	|cdb key r|
-	cdb := Cdb fileName: 'test.cdb'.
+	cdb := OldCdb fileName: 'test.cdb'.
 	key := 'one' asByteArray.
 	r := cdb find: key.
 	cdb close.
@@ -35,7 +35,7 @@ MyPlayground >> myPlaygroundCdbFind [
 MyPlayground >> myPlaygroundCdbFind2 [
 	
 	|cdb key r|
-	cdb := Cdb fileName: 'testTwoSimilarKeys.cdb'..
+	cdb := OldCdb fileName: 'testTwoSimilarKeys.cdb'..
 	key := 'one'.
 	r := cdb find: key.
 	cdb close.
@@ -47,7 +47,7 @@ MyPlayground >> myPlaygroundCdbMake [
 	"Playground example for use CDB make"
 
 	| maker |
-	maker := CdbMake new.
+	maker := OldCdbMake new.
 	maker start: 'testTwoSimilarKeys.cdb'.
 	maker addKey: 'one' asByteArray value: 'Rambo1' asByteArray. 
 	maker addKey: 'three' asByteArray value: 'Golden State Warriors' asByteArray.

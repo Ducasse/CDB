@@ -28,11 +28,11 @@ CDBEnumTest >> testGeneric [
 		lenVal := rdm nextInt: 10000.
 		keys at: c put: (self randomStr: lenKey).
 		values at: c put: (self randomStr: lenVal) ].
-	maker := CdbMake new.
+	maker := OldCdbMake new.
 	maker start: 'test.cdb'.
 	1 to: size do: [ :c | maker addKey: (keys at: c) asByteArray value: (values at: c) asByteArray ].
 	maker finish.
-	cdbEnum := CdbEnumeration new: 'test.cdb'.
+	cdbEnum := OldCdbEnumeration new: 'test.cdb'.
 	i := 1.
 	[ cdbEnum hasMoreElements ]
 		whileTrue: [ result := cdbEnum nextElement.
@@ -46,12 +46,12 @@ CDBEnumTest >> testInsertOneChar [
 	"comment stating purpose of message"
 
 	| maker cdbEnum result |
-	maker := CdbMake new.
+	maker := OldCdbMake new.
 	maker start: 'test.cdb'.
 	maker addKey: 'a' value: 'toto'.
 	maker finish.
 	
-	cdbEnum := CdbEnumeration new: 'test.cdb'.
+	cdbEnum := OldCdbEnumeration new: 'test.cdb'.
 	result := cdbEnum nextElement.
 	self assert: 'a' = result key asString.
 	self assert: 'toto' = result data asString.
@@ -65,13 +65,13 @@ CDBEnumTest >> testOneEnumaration [
 	
 	keys := #('three' 'four').
 	values := #('Golden State Warriors' 'Record of Chicago Bulls').
-	maker := CdbMake new.
+	maker := OldCdbMake new.
 	maker start: 'test.cdb'.
 	maker addKey: (keys at: 1) value: (values at: 1).
 	maker addKey: (keys at: 2) value: (values at: 2).
 	maker finish.
 	
-	cdbEnum := CdbEnumeration new: 'test.cdb'.
+	cdbEnum := OldCdbEnumeration new: 'test.cdb'.
  	i := 1.
  	[ cdbEnum hasMoreElements ] 
       whileTrue: [
@@ -90,13 +90,13 @@ CDBEnumTest >> testOneHasMoreElement [
 	
 	keys := #('three' 'four').
 	values := #('Golden State Warriors' 'Record of Chicago Bulls').
-	maker := CdbMake new.
+	maker := OldCdbMake new.
 	maker start:'test.cdb'.
 	maker addKey: ((keys at: 1) asByteArray) value: ((values at: 1) asByteArray).
 	maker addKey: ((keys at: 2) asByteArray) value: ((values at: 2) asByteArray).
 	maker finish.
 	
-	cdbEnum := CdbEnumeration new: 'test.cdb'.
+	cdbEnum := OldCdbEnumeration new: 'test.cdb'.
   	expectedSize := 0.
  	[ cdbEnum hasMoreElements ] 
       whileTrue: [
