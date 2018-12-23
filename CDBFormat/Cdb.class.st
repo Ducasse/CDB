@@ -16,12 +16,6 @@ Class {
 	#category : #CDBFormat
 }
 
-{ #category : #enumerating }
-Cdb class >> elements: filepath [
-	"Returns an Enumeration containing a CdbElement for each entry in the constant database"
- ^ CdbEnumeration new: filepath.
-]
-
 { #category : #'instance creation' }
 Cdb class >> fileName: aString [
 	^ self new

@@ -7,6 +7,20 @@ Class {
 	#category : #'CDBFormat-NewCore'
 }
 
+{ #category : #utilities }
+NGCbd class >> dumpOnTranscript: aFileName [
+	"self dumpOnTranscript: 'myFromPythonImplementation.cdb'"
+	"self dumpOnTranscript: 'testTwoSimilarKeys.cdb'"
+
+	| em cdbElt |
+	em := CdbEnumeration new: aFileName.
+	[ em hasMoreElements ]
+		whileTrue: [ cdbElt := em nextElement.
+			Transcript
+				show: cdbElt printString;
+				cr ]
+]
+
 { #category : #accessing }
 NGCbd >> fileName: aString [
 	file := File named: aString asFileReference fullName

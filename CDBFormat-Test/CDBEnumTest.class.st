@@ -32,7 +32,7 @@ CDBEnumTest >> testGeneric [
 	maker start: 'test.cdb'.
 	1 to: size do: [ :c | maker addKey: (keys at: c) asByteArray value: (values at: c) asByteArray ].
 	maker finish.
-	cdbEnum := Cdb elements: 'test.cdb'.
+	cdbEnum := CdbEnumeration new: 'test.cdb'.
 	i := 1.
 	[ cdbEnum hasMoreElements ]
 		whileTrue: [ result := cdbEnum nextElement.
@@ -51,7 +51,7 @@ CDBEnumTest >> testInsertOneChar [
 	maker addKey: 'a' value: 'toto'.
 	maker finish.
 	
-	cdbEnum := Cdb elements: 'test.cdb'.
+	cdbEnum := CdbEnumeration new: 'test.cdb'.
 	result := cdbEnum nextElement.
 	self assert: 'a' = result key asString.
 	self assert: 'toto' = result data asString.
@@ -71,7 +71,7 @@ CDBEnumTest >> testOneEnumaration [
 	maker addKey: (keys at: 2) value: (values at: 2).
 	maker finish.
 	
-	cdbEnum := Cdb elements: 'test.cdb'.
+	cdbEnum := CdbEnumeration new: 'test.cdb'.
  	i := 1.
  	[ cdbEnum hasMoreElements ] 
       whileTrue: [
@@ -96,7 +96,7 @@ CDBEnumTest >> testOneHasMoreElement [
 	maker addKey: ((keys at: 2) asByteArray) value: ((values at: 2) asByteArray).
 	maker finish.
 	
-	cdbEnum := Cdb elements:'test.cdb'.
+	cdbEnum := CdbEnumeration new: 'test.cdb'.
   	expectedSize := 0.
  	[ cdbEnum hasMoreElements ] 
       whileTrue: [
