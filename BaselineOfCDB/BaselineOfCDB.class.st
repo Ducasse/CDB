@@ -1,6 +1,6 @@
 Class {
 	#name : #BaselineOfCDB,
-	#superclass : #Object,
+	#superclass : #BaselineOf,
 	#category : #BaselineOfCDB
 }
 

@@ -5,7 +5,7 @@ maker start: 'PharoAllClasses.cdb'.
 Smalltalk allClasses do:
 		[ :c | 
 			c selectors do: [ :s |
-					maker addKey: c name, '>>', s asString value: (c >>s) sourceCode ].
+					maker addKey: c name, '>>', s asString value: (c >>s) sourceCode ]
 			c class selectors do: [ :s |
 					maker addKey: c class name, '>>', s asString value: (c class >>s) sourceCode ] ].
 maker finish.
@@ -15,6 +15,21 @@ maker finish.
 em := CDBDumper new.
 em initializeWithFilePath: 'PharoAllClasses.cdb'.
 em dump
+
+| cdb |
+cdb := CDB new.
+cdb createFromFile: 'PharoAllClasses.cdb'.
+(cdb find: 'ZnValueDelegate class>>with:') asString.
+cdb close
+
+[(self find: 'ZnValueDelegate class>>with:') asString.
+(self find: 'CDB>>close') asString.
+(self find: 'CDB>>computePosition') asString.
+(self find: 'CDBDumper>>finalize') asString
+] bench  
+
+>>> '10990.202 per second'
+
 	
 
 "
