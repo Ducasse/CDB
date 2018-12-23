@@ -21,28 +21,6 @@ MyPlayground >> myPlaygroundCdbEnum2 [
 ]
 
 { #category : #'as yet unclassified' }
-MyPlayground >> myPlaygroundCdbFind [
-	
-	|cdb key r|
-	cdb := OldCdb fileName: 'test.cdb'.
-	key := 'one' asByteArray.
-	r := cdb find: key.
-	cdb close.
-	self assert: r asString equals: 'rambo'
-]
-
-{ #category : #'as yet unclassified' }
-MyPlayground >> myPlaygroundCdbFind2 [
-	
-	|cdb key r|
-	cdb := OldCdb fileName: 'testTwoSimilarKeys.cdb'..
-	key := 'one'.
-	r := cdb find: key.
-	cdb close.
-	r asString = 'rambo'
-]
-
-{ #category : #'as yet unclassified' }
 MyPlayground >> myPlaygroundCdbMake [
 	"Playground example for use CDB make"
 

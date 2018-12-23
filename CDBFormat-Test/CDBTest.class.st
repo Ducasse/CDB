@@ -61,6 +61,65 @@ CDBTest >> testFind [
 ]
 
 { #category : #tests }
+CDBTest >> testFind2 [
+
+	| cdb maker values |
+	values := {  ('a' -> 'ami') . ('b' -> 'balance') . ('c' -> 'cerise') . ('d' -> 'dentiste')}.
+	maker := OldCdbMake new.
+	maker start: 'test.cdb'.
+	values do: [ :v | maker addKey: v key value: v value ].
+	maker finish.
+	
+	cdb := CDB new.
+	cdb createFromFile: 'test.cdb'.
+	
+	values do: [ :v | 
+				| result |
+	          result := (cdb find: v key) asString.
+	          self assert: v value equals: result.
+	     ].
+	cdb close.
+]
+
+{ #category : #tests }
+CDBTest >> testFindWithDuplicatedKeys [
+
+	| cdb maker values result |
+	values := {  ('a' -> 'ami') . ('b' -> 'balance') . ('c' -> 'cerise') . ('d' -> 'dentiste') . ('a' -> 'ennemi') }.
+	maker := OldCdbMake new.
+	maker start: 'test.cdb'.
+	values do: [ :v | maker addKey: v key value: v value ].
+	maker finish.
+	
+	cdb := CDB new.
+	cdb createFromFile: 'test.cdb'.
+	result := (cdb find: 'a'). 
+	self assert: result asString equals: 'ennemi'.
+	cdb close.
+]
+
+{ #category : #tests }
+CDBTest >> testFindWithbetterIteratingLogic [
+
+	| cdb maker values |
+	values := {  ('a' -> 'ami') . ('b' -> 'balance') . ('c' -> 'cerise') . ('d' -> 'dentiste')}.
+	maker := OldCdbMake new.
+	maker start: 'test.cdb'.
+	values do: [ :v | maker addKey: v key value: v value ].
+	maker finish.
+	
+	cdb := CDB new.
+	cdb createFromFile: 'test.cdb'.
+	
+	values do: [ :v | 
+				| result |
+	          result := (cdb find: v key) asString.
+	          self assert: v value equals: result.
+	     ].
+	cdb close.
+]
+
+{ #category : #tests }
 CDBTest >> testNextElement [
 
 	| em element |
