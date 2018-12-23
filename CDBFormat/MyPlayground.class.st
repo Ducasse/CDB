@@ -19,17 +19,3 @@ MyPlayground >> myPlaygroundCdbEnum2 [
 				show: cdbElt printString;
 				cr ]
 ]
-
-{ #category : #'as yet unclassified' }
-MyPlayground >> myPlaygroundCdbMake [
-	"Playground example for use CDB make"
-
-	| maker |
-	maker := OldCdbMake new.
-	maker start: 'testTwoSimilarKeys.cdb'.
-	maker addKey: 'one' asByteArray value: 'Rambo1' asByteArray. 
-	maker addKey: 'three' asByteArray value: 'Golden State Warriors' asByteArray.
-	maker addKey: 'four' asByteArray value: 'Record of Chicago Bulls' asByteArray. 
-	maker addKey: 'one' asByteArray value: 'Rambo2' asByteArray. 
-	maker finish.
-]

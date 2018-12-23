@@ -1,30 +1,32 @@
 "
-CdbMake implements the database-creation side of
+For the moment migrate the old code to his class and not CDB. 
+
+I'm responsible to create a new constant database. 
 "
 Class {
-	#name : #OldCdbMake,
+	#name : #CDBCreator,
 	#superclass : #Object,
 	#instVars : [
-		'file',
 		'hashPointers',
 		'tableCount',
 		'tableStart',
+		'file',
 		'pos'
 	],
-	#category : #'CDBFormat-Old'
+	#category : #'CDBFormat-NewCore'
 }
 
-{ #category : #'modal control' }
-OldCdbMake >> addKey: keyOne value: dataOne [
-	"Adds a key to the constant database"
+{ #category : #adding }
+CDBCreator >> addKey: keyOne value: dataOne [
+	"Adds a key to the constant database. I can only be invoked after an initial start:."
 	
 	| hash itc key data |
 	key := keyOne asByteArray.
 	data := dataOne asByteArray.
 	
 	"Write out sizes"
-	self writeLeInt: (key size).
-	self writeLeInt: (data size).
+	self writeLeInt: key size.
+	self writeLeInt: data size.
 	
 	"Write out the key"
 	file nextBytesPutAll: key.
@@ -32,7 +34,7 @@ OldCdbMake >> addKey: keyOne value: dataOne [
 	
 	"Add the hash pointer to our list"
 	hash := key cdbHash.
-	hashPointers add: (hash -> pos).
+	hashPointers add: hash -> pos.
 	
 	"Add this item to the count"
 	itc := (hash bitAnd: 16rff) + 1.
@@ -44,8 +46,8 @@ OldCdbMake >> addKey: keyOne value: dataOne [
 	self increasePositionOf: data size.
 ]
 
-{ #category : #'modal control' }
-OldCdbMake >> finish [
+{ #category : #'low surrounding phases' }
+CDBCreator >> finish [
 	"Finalizes the constant database."
 	
 	| curEntry slotPointers slotTable |
@@ -105,7 +107,7 @@ OldCdbMake >> finish [
 		"Write out the hash table."
 		1 to: len do: [ :u | | hp |
 			hp := hashTable at: u.
-			( hp = nil )
+			( hp isNil )
 				ifFalse: [ 
 					self writeLeInt: ((hashTable at: u) key).
 					self writeLeInt: ((hashTable at: u) value).
@@ -125,8 +127,8 @@ OldCdbMake >> finish [
 	file close.
 ]
 
-{ #category : #'modal control' }
-OldCdbMake >> increasePositionOf: count [
+{ #category : #utils }
+CDBCreator >> increasePositionOf: count [
 	"Advances the file pointer by count bytes, throwing an exception if doing so would cause the file to grow beyond 4 GB."
 
 	| newpos |
@@ -136,8 +138,8 @@ OldCdbMake >> increasePositionOf: count [
 		ifFalse: [ pos := newpos ]
 ]
 
-{ #category : #starting }
-OldCdbMake >> start: filepath [
+{ #category : #'low surrounding phases' }
+CDBCreator >> start: filepath [
 	"Begins the constant database creation process."
 	hashPointers  := LinkedList new.
 	tableCount := IntegerArray new: 256 withAll: 0.
@@ -151,8 +153,8 @@ OldCdbMake >> start: filepath [
 	file position: pos.
 ]
 
-{ #category : #'modal control' }
-OldCdbMake >> writeLeInt: v [
+{ #category : #utils }
+CDBCreator >> writeLeInt: v [
 	"Writes an integer in little-endian format to the constant database at the current file offset."
 	
 	| a b c d |

@@ -42,7 +42,7 @@ CDBTest >> testFind [
 	|cdb i maker  keys values result|
 	keys := #('three' 'four').
 	values := #('Golden State Warriors' 'Record of Chicago Bulls').
-	maker := OldCdbMake new.
+	maker := CDBCreator new.
 	maker start: 'test.cdb'.
 	maker addKey: (keys at: 1) value: (values at: 1).
 	maker addKey: (keys at: 2) value: (values at: 2).
@@ -65,14 +65,15 @@ CDBTest >> testFind2 [
 
 	| cdb maker values |
 	values := {  ('a' -> 'ami') . ('b' -> 'balance') . ('c' -> 'cerise') . ('d' -> 'dentiste')}.
-	maker := OldCdbMake new.
+	maker := CDBCreator new.
 	maker start: 'test.cdb'.
 	values do: [ :v | maker addKey: v key value: v value ].
 	maker finish.
 	
+	
+	
 	cdb := CDB new.
 	cdb createFromFile: 'test.cdb'.
-	
 	values do: [ :v | 
 				| result |
 	          result := (cdb find: v key) asString.
@@ -86,7 +87,7 @@ CDBTest >> testFindWithDuplicatedKeys [
 
 	| cdb maker values result |
 	values := {  ('a' -> 'ami') . ('b' -> 'balance') . ('c' -> 'cerise') . ('d' -> 'dentiste') . ('a' -> 'ennemi') }.
-	maker := OldCdbMake new.
+	maker := CDBCreator new.
 	maker start: 'test.cdb'.
 	values do: [ :v | maker addKey: v key value: v value ].
 	maker finish.
@@ -103,10 +104,11 @@ CDBTest >> testFindWithbetterIteratingLogic [
 
 	| cdb maker values |
 	values := {  ('a' -> 'ami') . ('b' -> 'balance') . ('c' -> 'cerise') . ('d' -> 'dentiste')}.
-	maker := OldCdbMake new.
+	maker := CDBCreator new.
 	maker start: 'test.cdb'.
 	values do: [ :v | maker addKey: v key value: v value ].
 	maker finish.
+	
 	
 	cdb := CDB new.
 	cdb createFromFile: 'test.cdb'.
@@ -166,7 +168,7 @@ CDBTest >> testReadFile2 [
 			stream nextPutAll: self class encodedCDBFileContents ].
 		
 	em := OldCdbEnumeration new.
-	em initialize: (testingWorkingDirectory / self class cdbFile) contents base64Decoded.
+	em initializeWithByteArray: (testingWorkingDirectory / self class cdbFile) contents base64Decoded.
 	element := em nextElement.
 	self assert: element key asString equals: 'three'.
 	self assert: element data asString equals: 'Golden State Warriors'.

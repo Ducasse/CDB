@@ -44,19 +44,13 @@ OldCdbEnumeration >> gtInspectorDetailsIn: composite [
 OldCdbEnumeration >> hasMoreElements [
 	"Returns true,if there are more elements in the constant database, false otherwise."
 
-	^ pos < eod.
+	^ pos < eod
 ]
 
 { #category : #accessing }
 OldCdbEnumeration >> in [
 
 	^ in
-]
-
-{ #category : #initalize }
-OldCdbEnumeration >> initialize: filepath [
-	
-	self initializeWithByteArray: filepath 
 ]
 
 { #category : #initalize }
@@ -134,12 +128,4 @@ OldCdbEnumeration >> readLeInt [
 	D := (in next bitAnd: 16rFF) << 24.
 	
 	^ A bitOr: (B bitOr: (C bitOr: D)) 
-]
-
-{ #category : #initalize }
-OldCdbEnumeration >> setPath: filepath [
-	
-	in := FileStream readOnlyFileNamed: filepath.
-	in binary.
-
 ]

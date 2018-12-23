@@ -28,7 +28,7 @@ OldCDBEnumTest >> testGeneric [
 		lenVal := rdm nextInt: 10000.
 		keys at: c put: (self randomStr: lenKey).
 		values at: c put: (self randomStr: lenVal) ].
-	maker := OldCdbMake new.
+	maker := CDBCreator new.
 	maker start: 'test.cdb'.
 	1 to: size do: [ :c | maker addKey: (keys at: c) asByteArray value: (values at: c) asByteArray ].
 	maker finish.
@@ -46,7 +46,7 @@ OldCDBEnumTest >> testInsertOneChar [
 	"comment stating purpose of message"
 
 	| maker cdbEnum result |
-	maker := OldCdbMake new.
+	maker := CDBCreator new.
 	maker start: 'test.cdb'.
 	maker addKey: 'a' value: 'toto'.
 	maker finish.
@@ -65,7 +65,7 @@ OldCDBEnumTest >> testOneEnumaration [
 	
 	keys := #('three' 'four').
 	values := #('Golden State Warriors' 'Record of Chicago Bulls').
-	maker := OldCdbMake new.
+	maker := CDBCreator new.
 	maker start: 'test.cdb'.
 	maker addKey: (keys at: 1) value: (values at: 1).
 	maker addKey: (keys at: 2) value: (values at: 2).
@@ -90,10 +90,10 @@ OldCDBEnumTest >> testOneHasMoreElement [
 	
 	keys := #('three' 'four').
 	values := #('Golden State Warriors' 'Record of Chicago Bulls').
-	maker := OldCdbMake new.
+	maker := CDBCreator new.
 	maker start:'test.cdb'.
-	maker addKey: ((keys at: 1) asByteArray) value: ((values at: 1) asByteArray).
-	maker addKey: ((keys at: 2) asByteArray) value: ((values at: 2) asByteArray).
+	maker addKey: (keys at: 1) value: (values at: 1).
+	maker addKey: (keys at: 2) value: (values at: 2).
 	maker finish.
 	
 	cdbEnum := OldCdbEnumeration new: 'test.cdb'.
