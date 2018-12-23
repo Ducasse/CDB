@@ -9,36 +9,37 @@ Class {
 
 { #category : #'as yet unclassified' }
 MyPlayground >> myPlaygroundCdbEnum [
-
-	| em cdbElt | 
+	| em cdbElt |
 	em := Cdb elements: 'testTwoSimilarKeys.cdb'.
-	[ em hasMoreElements ] whileTrue: [ 
-		cdbElt := em nextElement.
-		Transcript show: 'Value : '; show: cdbElt data asString; show: ' Key : '; show: cdbElt key asString; cr.
-   ].
+	[ em hasMoreElements ]
+		whileTrue: [ cdbElt := em nextElement.
+			Transcript
+				show: cdbElt printString;
+				cr ]
 ]
 
 { #category : #'as yet unclassified' }
 MyPlayground >> myPlaygroundCdbEnum2 [
-
-	| em cdbElt | 
-	em := CdbEnumeration new 
-				initializeWithByteArray: NewCDBTest decodedCDBFileContents readStream; yourself.
-	[ em hasMoreElements ] whileTrue: [ 
-		cdbElt := em nextElement.
-		Transcript show: 'Value : '; show: cdbElt data asString; show: ' Key : '; show: cdbElt key asString; cr.
-   ].
+	| em cdbElt |
+	em := CdbEnumeration new
+		initializeWithByteArray: NewCDBTest decodedCDBFileContents readStream;
+		yourself.
+	[ em hasMoreElements ]
+		whileTrue: [ cdbElt := em nextElement.
+			Transcript
+				show: cdbElt printString;
+				cr ]
 ]
 
 { #category : #'as yet unclassified' }
 MyPlayground >> myPlaygroundCdbEnum3 [
-
-	| em cdbElt | 
+	| em cdbElt |
 	em := Cdb elements: 'myFromPythonImplementation.cdb'.
-	[ em hasMoreElements ] whileTrue: [ 
-		cdbElt := em nextElement.
-		Transcript show: 'Value : '; show: cdbElt data asString; show: ' Key : '; show: cdbElt key asString; cr.
-   ].
+	[ em hasMoreElements ]
+		whileTrue: [ cdbElt := em nextElement.
+			Transcript
+				show: cdbElt printString;
+				cr ]
 ]
 
 { #category : #'as yet unclassified' }

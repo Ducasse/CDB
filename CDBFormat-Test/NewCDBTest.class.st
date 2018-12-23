@@ -8,7 +8,7 @@ Class {
 	#instVars : [
 		'testingWorkingDirectory'
 	],
-	#category : #'CDBFormat-Test'
+	#category : #'CDBFormat-Test-New'
 }
 
 { #category : #ressources }
@@ -41,6 +41,7 @@ NewCDBTest >> testHash [
 
 	self assert: #[1] cdbHash equals: 177572.
 	self assert: #[11] cdbHash equals: 177582.
+	self assert: #[1 1] cdbHash equals: 5859877.
 ]
 
 { #category : #tests }

@@ -30,6 +30,15 @@ CdbElement >> key [
 	^ key
 ]
 
+{ #category : #printing }
+CdbElement >> printOn: aStream [
+	aStream
+		nextPutAll: 'k: ';
+		nextPutAll: key asString;
+		nextPutAll: ' v: ';
+		nextPutAll: data asString
+]
+
 { #category : #initalize }
 CdbElement >> setKey: k data: d [
 	"Creates an instance of the CdbElement class and initializes it with the given key and data values."

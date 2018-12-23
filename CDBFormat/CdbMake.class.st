@@ -17,8 +17,8 @@ Class {
 { #category : #'modal control' }
 CdbMake >> addKey: keyOne value: dataOne [
 	"Adds a key to the constant database"
-	| hash itc key data |
 	
+	| hash itc key data |
 	key := keyOne asByteArray.
 	data := dataOne asByteArray.
 	
@@ -36,12 +36,10 @@ CdbMake >> addKey: keyOne value: dataOne [
 	
 	"Add the hash pointer to our list"
 	hash := key cdbHash.
-	"Transcript show: 'add, elm : hash : '; show: hash; show: ' pos : '; show: pos; cr."
 	hashPointers add: (hash -> pos).
 	
 	"Add this item to the count"
 	itc := (hash bitAnd: 16rff) + 1.
-	"Transcript show: 'add, itc : '; show: itc; cr."
 	tableCount at: itc put: ((tableCount at: itc) +1).
 	
 	"Update the file position pointer"
@@ -164,7 +162,7 @@ CdbMake >> start: filepath [
 CdbMake >> writeLeInt: v [
 	"Writes an integer in little-endian format to the constant database at the current file offset."
 	
-	|a b c d|
+	| a b c d |
 	a := v bitAnd: 16rff.
 	b := v >> 8 bitAnd: 16rff.
 	c := v >> 16 bitAnd: 16rff.
