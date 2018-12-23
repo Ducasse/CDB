@@ -12,11 +12,11 @@ OldCDBTest >> testFind [
 	keys := #('three' 'four').
 	values := #('Golden State Warriors' 'Record of Chicago Bulls').
 	maker := OldCdbMake new.
-	maker start:'test.cdb'.
-	
+	maker start: 'test.cdb'.
 	maker addKey: (keys at: 1) value: (values at: 1).
 	maker addKey: (keys at: 2) value: (values at: 2).
 	maker finish.
+	
 	cdb := OldCdb fileName: 'test.cdb'.
 	i := 1.
 	[ i<= 2 ]

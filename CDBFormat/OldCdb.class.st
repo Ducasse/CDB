@@ -39,19 +39,15 @@ OldCdb >> fileName: aString [
 { #category : #'modal control' }
 OldCdb >> find: keyOne [
 	"Finds the first record stored under the given key"
-	| h pos klen dlen k d key |
 	
+	| h pos klen dlen k d key |
 	loop := 0.
 	key := keyOne asByteArray.
-	
-	"There are no keys if we could not read the slot table"
+	"There are no keys if we cannot read the slot table"
 	(slotTable == nil) ifTrue: [ ^ nil ].
 	
 	"Locate the hash entry if we have not yet done so"
-	
-	(self ifActionForLoopEqualZero: key) ifFalse: [
-		^ nil.
-	].
+	(self ifActionForLoopEqualZero: key) ifFalse: [	^ nil ].
 
 	"Search all of the hash slots for this key"
 	[loop < hslots] whileTrue: [
@@ -61,8 +57,8 @@ OldCdb >> find: keyOne [
 		(pos = 0) ifTrue: [ ^ nil ]. 
 		
 		"Advance the loop count and key position"
-		loop := loop +1.
-		kpos := kpos +8.
+		loop := loop + 1.
+		kpos := kpos + 8.
 		(kpos = (hpos + (hslots << 3))) ifTrue: [ kpos := hpos ].
 		
 		"Ignore this entry if the hash values do not match"
@@ -124,9 +120,10 @@ OldCdb >> initialize: filepath [
 	file := FileStream readOnlyFileNamed: filepath.
 	file binary.
 
-	" Read and parse the slot table"
+	"Read and parse the slot table"
 	table := ByteArray new: 2048.
 	file readInto: table startingAt: 1 count: 2048.
+	
 	slotTable := IntegerArray new: 256 * 2.
 	offset := 1.
 	iecart := 0.
