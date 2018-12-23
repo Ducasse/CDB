@@ -1,7 +1,7 @@
 Class {
 	#name : #CDBHashTest,
 	#superclass : #TestCase,
-	#category : #'CDBFormat-Test'
+	#category : #'CDBFormat-Test-New'
 }
 
 { #category : #tests }
@@ -17,4 +17,12 @@ CDBHashTest >> testHash [
 	self assert: b2 cdbHash equals: 193376997.
 	self assert: b3 cdbHash equals: 193381394.
 	self assert: b4 cdbHash equals: 1437972773
+]
+
+{ #category : #tests }
+CDBHashTest >> testHash2 [
+
+	self assert: #[1] cdbHash equals: 177572.
+	self assert: #[11] cdbHash equals: 177582.
+	self assert: #[1 1] cdbHash equals: 5859877.
 ]

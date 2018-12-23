@@ -1,11 +1,11 @@
 Class {
-	#name : #CDBEnumTest,
+	#name : #OldCDBEnumTest,
 	#superclass : #TestCase,
-	#category : #'CDBFormat-Test'
+	#category : #'CDBFormat-Test-Old'
 }
 
 { #category : #helpers }
-CDBEnumTest >> randomStr: aSize [
+OldCDBEnumTest >> randomStr: aSize [
 	"self new randomStr: 4"
 
 	| alphabet |
@@ -14,7 +14,7 @@ CDBEnumTest >> randomStr: aSize [
 ]
 
 { #category : #tests }
-CDBEnumTest >> testGeneric [
+OldCDBEnumTest >> testGeneric [
 	"Playground example for use CDB make"
 
 	| i maker cdbEnum keys values result size rdm |
@@ -42,7 +42,7 @@ CDBEnumTest >> testGeneric [
 ]
 
 { #category : #tests }
-CDBEnumTest >> testInsertOneChar [
+OldCDBEnumTest >> testInsertOneChar [
 	"comment stating purpose of message"
 
 	| maker cdbEnum result |
@@ -58,7 +58,7 @@ CDBEnumTest >> testInsertOneChar [
 ]
 
 { #category : #tests }
-CDBEnumTest >> testOneEnumaration [
+OldCDBEnumTest >> testOneEnumaration [
 	"Playground example for use CDB make"
 
 	|i maker cdbEnum keys values result|
@@ -83,7 +83,7 @@ CDBEnumTest >> testOneEnumaration [
 ]
 
 { #category : #tests }
-CDBEnumTest >> testOneHasMoreElement [
+OldCDBEnumTest >> testOneHasMoreElement [
 	"Playground example for use CDB make"
 
 	|expectedSize maker cdbEnum keys values|

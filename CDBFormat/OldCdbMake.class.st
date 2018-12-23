@@ -11,7 +11,7 @@ Class {
 		'tableStart',
 		'pos'
 	],
-	#category : #CDBFormat
+	#category : #'CDBFormat-Old'
 }
 
 { #category : #'modal control' }

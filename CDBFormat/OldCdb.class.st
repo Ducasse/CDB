@@ -13,7 +13,7 @@ Class {
 		'hpos',
 		'kpos'
 	],
-	#category : #CDBFormat
+	#category : #'CDBFormat-Old'
 }
 
 { #category : #'instance creation' }

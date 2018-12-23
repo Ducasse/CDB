@@ -12,7 +12,7 @@ Class {
 		'eod',
 		'pos'
 	],
-	#category : #CDBFormat
+	#category : #'CDBFormat-Old'
 }
 
 { #category : #new }
