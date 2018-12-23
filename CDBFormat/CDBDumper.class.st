@@ -5,42 +5,43 @@ An Enumeration containing a CdbElement for each entry in the constant database.
 
 "
 Class {
-	#name : #OldCdbEnumeration,
+	#name : #CDBDumper,
 	#superclass : #Object,
 	#instVars : [
 		'in',
 		'eod',
 		'pos'
 	],
-	#category : #'CDBFormat-Old'
+	#category : #'CDBFormat-CDB'
 }
 
-{ #category : #new }
-OldCdbEnumeration class >> new: aFilepath [
-	 ^ self new
-		initializeWithFilePath: aFilepath;
-		yourself
-]
-
-{ #category : #inspection }
-OldCdbEnumeration >> dump [ 
+{ #category : #iterate }
+CDBDumper >> do: aBlock [
 
 	[ self hasMoreElements ]
 		whileTrue: [ 
-			| cdbElt | cdbElt := self nextElement.
+			| cdbElt | 
+			cdbElt := self nextElement.
+			aBlock value: cdbElt ]
+]
+
+{ #category : #iterate }
+CDBDumper >> dump [ 
+
+	self do: [ :cdbElt | 
 			Transcript
 				show: cdbElt printString;
 				cr ]
 ]
 
-{ #category : #'modal control' }
-OldCdbEnumeration >> finalize [
+{ #category : #reading }
+CDBDumper >> finalize [
 
 	in close
 ]
 
 { #category : #inspection }
-OldCdbEnumeration >> gtInspectorDetailsIn: composite [
+CDBDumper >> gtInspectorDetailsIn: composite [
 	<gtInspectorPresentationOrder: 30>
 	^ composite table
 		title: [ 'Details' ];
@@ -51,21 +52,21 @@ OldCdbEnumeration >> gtInspectorDetailsIn: composite [
 		send: #value
 ]
 
-{ #category : #'modal control' }
-OldCdbEnumeration >> hasMoreElements [
+{ #category : #reading }
+CDBDumper >> hasMoreElements [
 	"Returns true,if there are more elements in the constant database, false otherwise."
 
 	^ pos < eod
 ]
 
 { #category : #accessing }
-OldCdbEnumeration >> in [
+CDBDumper >> in [
 
 	^ in
 ]
 
 { #category : #initalize }
-OldCdbEnumeration >> initializeRawValue [
+CDBDumper >> initializeRawValue [
 
 	eod := self readNextLittleEndianByte.
 	"Skip the rest of the hashtable"
@@ -75,21 +76,21 @@ OldCdbEnumeration >> initializeRawValue [
 ]
 
 { #category : #initalize }
-OldCdbEnumeration >> initializeWithByteArray: aByteArray [
+CDBDumper >> initializeWithByteArray: aByteArray [
 
 	in := ZnBufferedReadStream on: aByteArray readStream.
 	self initializeRawValue
 ]
 
 { #category : #initalize }
-OldCdbEnumeration >> initializeWithFilePath: filepath [
+CDBDumper >> initializeWithFilePath: filepath [
 	
 	in := (File named: filepath asFileReference fullName) readStream.
 	self initializeRawValue
 ]
 
-{ #category : #'modal control' }
-OldCdbEnumeration >> nextElement [
+{ #category : #reading }
+CDBDumper >> nextElement [
 	"Returns the next data element in the CDB file"
 	
 	| klen dlen key data |
@@ -102,8 +103,8 @@ OldCdbEnumeration >> nextElement [
 	^ CdbElement new: key and: data.
 ]
 
-{ #category : #'modal control' }
-OldCdbEnumeration >> nextFor: length [
+{ #category : #reading }
+CDBDumper >> nextFor: length [
 
 	| off contents count| 
 	contents := ByteArray new: length.
@@ -118,8 +119,8 @@ OldCdbEnumeration >> nextFor: length [
 	
 ]
 
-{ #category : #initalize }
-OldCdbEnumeration >> readNextLittleEndianByte [
+{ #category : #reading }
+CDBDumper >> readNextLittleEndianByte [
 
 	| a b c d |
 	a := in next bitAnd: 16rFF.

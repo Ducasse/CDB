@@ -13,7 +13,7 @@ Class {
 		'file',
 		'pos'
 	],
-	#category : #'CDBFormat-NewCore'
+	#category : #'CDBFormat-CDB'
 }
 
 { #category : #adding }

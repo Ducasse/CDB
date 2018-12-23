@@ -8,7 +8,7 @@ Class {
 		'data',
 		'key'
 	],
-	#category : #'CDBFormat-NewCore'
+	#category : #'CDBFormat-CDB'
 }
 
 { #category : #new }
@@ -34,9 +34,9 @@ CdbElement >> key [
 CdbElement >> printOn: aStream [
 	aStream
 		nextPutAll: 'k: ';
-		nextPutAll: key asString;
+		print: key asString ;
 		nextPutAll: ' v: ';
-		nextPutAll: data asString
+		print: data asString 
 ]
 
 { #category : #initalize }

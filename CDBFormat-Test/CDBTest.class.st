@@ -4,20 +4,22 @@ How to add more resources (CBD examples) to the test class?
 - Use a script as the following to generate a little file.
 
 	| cdb maker values result |
-	values := { ('aaa' -> 'ami') . ('bal' -> 'balance') . ('c123' -> 'cerise') . ('doul' -> 'dentiste') }.
+	values :=  {('Sun' -> '1 392 000, 1.9889x10^30') . ('Jupiter' -> '142 984, 1.8986x10^27') . ('Neptune' -> '49 528, 1.0243x10^26') . 
+	('Mars' -> '6 780, 6.4185x10^23')}.
 	maker := CDBCreator new.
-	maker start: 'testCerise.cdb'.
+	maker start: 'testPlanets.cdb'.
 	values do: [ :v | maker addKey: v key value: v value ].
 	maker finish.
 
 - then turn the file contents into a string using the following for example
 
-(File named: 'testCerise.cdb' asFileName) readStream contents asByteArray base64Encoded
+(File named: 'testPlanets.cdb' asFileName) readStream contents asByteArray base64Encoded
 
 
 
 CDB dumpFileOnTranscript: 'myFromPythonImplementation.cdb'.
-CDB dumpFileOnTranscript: 'testCerise.cdb'
+CDB dumpFileOnTranscript: 'testCerise.cdb'.
+CDB dumpFileOnTranscript: 'my2.cdb'
 
 OldCdbEnumeration new 
 	initializeWithByteArray: CDBTest encodedCDBFileContentsPython base64Decoded ;
@@ -65,6 +67,16 @@ CDBTest class >> encodedCDBFileContentsCerise [
 ]
 
 { #category : #ressources }
+CDBTest class >> encodedCDBFileContentsPlanets [
+	"this string is a base64Encoded cdb file generated for these facts: 
+		
+ {  ('Sun' -> '1 392 000, 1.9889x10^30') . ('Jupiter' -> '142 984, 1.8986x10^27') . ('Neptune' -> '49 528, 1.0243x10^26') . 
+	('Mars' -> '6 780, 6.4185x10^23')}
+"
+	^    'iAgAAAIAAACYCAAAAAAAAJgIAAAAAAAAmAgAAAAAAACYCAAAAAAAAJgIAAAAAAAAmAgAAAAAAACYCAAAAAAAAJgIAAAAAAAAmAgAAAAAAACYCAAAAAAAAJgIAAAAAAAAmAgAAAAAAACYCAAAAAAAAJgIAAAAAAAAmAgAAAAAAACYCAAAAAAAAJgIAAAAAAAAmAgAAAAAAACYCAAAAAAAAJgIAAAAAAAAmAgAAAAAAACYCAAAAAAAAJgIAAAAAAAAmAgAAAAAAACYCAAAAAAAAJgIAAAAAAAAmAgAAAAAAACYCAAAAAAAAJgIAAAAAAAAmAgAAAAAAACYCAAAAAAAAJgIAAAAAAAAmAgAAAAAAACYCAAAAAAAAJgIAAAAAAAAmAgAAAAAAACYCAAAAAAAAJgIAAAAAAAAmAgAAAAAAACYCAAAAAAAAJgIAAAAAAAAmAgAAAAAAACYCAAAAAAAAJgIAAAAAAAAmAgAAAAAAACYCAAAAAAAAJgIAAAAAAAAmAgAAAAAAACYCAAAAAAAAJgIAAAAAAAAmAgAAAAAAACYCAAAAAAAAJgIAAAAAAAAmAgAAAAAAACYCAAAAAAAAJgIAAAAAAAAmAgAAAAAAACYCAAAAAAAAJgIAAAAAAAAmAgAAAAAAACYCAAAAAAAAJgIAAAAAAAAmAgAAAAAAACYCAAAAAAAAJgIAAAAAAAAmAgAAAAAAACYCAAAAAAAAJgIAAAAAAAAmAgAAAAAAACYCAAAAAAAAJgIAAAAAAAAmAgAAAIAAACoCAAAAAAAAKgIAAAAAAAAqAgAAAAAAACoCAAAAAAAAKgIAAACAAAAuAgAAAAAAAC4CAAAAAAAALgIAAAAAAAAuAgAAAAAAAC4CAAAAAAAALgIAAAAAAAAuAgAAAAAAAC4CAAAAAAAALgIAAAAAAAAuAgAAAAAAAC4CAAAAAAAALgIAAAAAAAAuAgAAAAAAAC4CAAAAAAAALgIAAAAAAAAuAgAAAAAAAC4CAAAAAAAALgIAAAAAAAAuAgAAAAAAAC4CAAAAAAAALgIAAAAAAAAuAgAAAAAAAC4CAAAAAAAALgIAAAAAAAAuAgAAAAAAAC4CAAAAAAAALgIAAAAAAAAuAgAAAAAAAC4CAAAAAAAALgIAAAAAAAAuAgAAAAAAAC4CAAAAAAAALgIAAAAAAAAuAgAAAAAAAC4CAAAAAAAALgIAAAAAAAAuAgAAAAAAAC4CAAAAAAAALgIAAAAAAAAuAgAAAAAAAC4CAAAAAAAALgIAAAAAAAAuAgAAAAAAAC4CAAAAAAAALgIAAAAAAAAuAgAAAAAAAC4CAAAAAAAALgIAAAAAAAAuAgAAAAAAAC4CAAAAAAAALgIAAAAAAAAuAgAAAAAAAC4CAAAAAAAALgIAAAAAAAAuAgAAAAAAAC4CAAAAAAAALgIAAAAAAAAuAgAAAAAAAC4CAAAAAAAALgIAAAAAAAAuAgAAAAAAAC4CAAAAAAAALgIAAAAAAAAuAgAAAAAAAC4CAAAAAAAALgIAAAAAAAAuAgAAAAAAAC4CAAAAAAAALgIAAAAAAAAuAgAAAAAAAC4CAAAAAAAALgIAAAAAAAAuAgAAAAAAAC4CAAAAAAAALgIAAAAAAAAuAgAAAAAAAC4CAAAAAAAALgIAAAAAAAAuAgAAAAAAAC4CAAAAAAAALgIAAAAAAAAuAgAAAAAAAC4CAAAAAAAALgIAAAAAAAAuAgAAAAAAAC4CAAAAAAAALgIAAAAAAAAuAgAAAAAAAC4CAAAAAAAALgIAAAAAAAAuAgAAAAAAAC4CAAAAAAAALgIAAAAAAAAuAgAAAAAAAC4CAAAAAAAALgIAAAAAAAAuAgAAAAAAAC4CAAAAAAAALgIAAAAAAAAuAgAAAAAAAC4CAAAAAAAALgIAAAAAAAAuAgAAAAAAAC4CAAAAAAAALgIAAAAAAAAuAgAAAAAAAC4CAAAAAAAALgIAAAAAAAAuAgAAAAAAAC4CAAAAAAAALgIAAAAAAAAuAgAAAAAAAC4CAAAAAAAALgIAAAAAAAAuAgAAAAAAAC4CAAAAAAAALgIAAAAAAAAuAgAAAAAAAC4CAAAAAAAALgIAAAAAAAAuAgAAAAAAAC4CAAAAAAAALgIAAAAAAAAuAgAAAAAAAC4CAAAAAAAALgIAAAAAAAAuAgAAAAAAAC4CAAAAAAAALgIAAAAAAAAuAgAAAAAAAC4CAAAAAAAALgIAAAAAAAAuAgAAAAAAAC4CAAAAAAAALgIAAACAAAAyAgAAAAAAADICAAAAAAAAMgIAAAAAAAAyAgAAAAAAADICAAAAAAAAMgIAAAAAAAAyAgAAAAAAADICAAAAAAAAMgIAAAAAAAAyAgAAAAAAADICAAAAAAAAMgIAAAAAAAAyAgAAAAAAADICAAAAAAAAMgIAAAAAAAAyAgAAAAAAADICAAAAAAAAMgIAAAAAAAAyAgAAAAAAADICAAAAAAAAMgIAAAAAAAAyAgAAAAAAADICAAAAAAAAMgIAAAAAAAAyAgAAAAAAADICAAAAAAAAMgIAAAAAAAAyAgAAAAAAADICAAAAAAAAMgIAAAAAAAAyAgAAAAAAADICAAAAAAAAMgIAAAAAAAAyAgAAAAAAADICAAAAAAAAMgIAAAAAAAAyAgAAAAAAADICAAAAAAAAMgIAAAAAAAAyAgAAAAAAADICAAAAAAAAMgIAAAAAAAAyAgAAAAAAAADAAAAFwAAAFN1bjEgMzkyIDAwMCwgMS45ODg5eDEwXjMwBwAAABUAAABKdXBpdGVyMTQyIDk4NCwgMS44OTg2eDEwXjI3BwAAABQAAABOZXB0dW5lNDkgNTI4LCAxLjAyNDN4MTBeMjYEAAAAEwAAAE1hcnM2IDc4MCwgNi40MTg1eDEwXjIzAAAAAAAAAAAApRoLIggAAAAAAAAAAAAASD+AfGkIAAAAAAAAAAAAAE0NiAsACAAA1CbBxkYIAAAAAAAAAAAAAA=='
+]
+
+{ #category : #ressources }
 CDBTest class >> encodedCDBFileContentsPython [
 	"this string is a base64Encoded cdb file generated from the python implementation for these facts: 
 		
@@ -77,34 +89,10 @@ k: 'def' v: '567'
 ]
 
 { #category : #tests }
-CDBTest >> testFind [
+CDBTest >> createTestFile [
 
-	|cdb i maker  keys values result|
-	keys := #('three' 'four').
-	values := #('Golden State Warriors' 'Record of Chicago Bulls').
-	maker := CDBCreator new.
-	maker start: 'test.cdb'.
-	maker addKey: (keys at: 1) value: (values at: 1).
-	maker addKey: (keys at: 2) value: (values at: 2).
-	maker finish.
-	
-	cdb := CDB new.
-	cdb createFromFile: 'test.cdb'.
-	i := 1.
-	[ i<= 2 ]
-        whileTrue: [  
-	          result := (cdb find: (keys at: i)) asString.
-	          self assert: (values at: i) equals: result .
-	          i := i + 1.
-	     ].
-	cdb close.
-]
-
-{ #category : #tests }
-CDBTest >> testFind2 [
-
-	| cdb maker values |
-	values := {  ('a' -> 'ami') . ('b' -> 'balance') . ('c' -> 'cerise') . ('d' -> 'dentiste')}.
+	| values maker |
+	values := self data.
 	maker := CDBCreator new.
 	maker start: 'test.cdb'.
 	values do: [ :v | maker addKey: v key value: v value ].
@@ -112,18 +100,59 @@ CDBTest >> testFind2 [
 	
 	
 	
+	
+]
+
+{ #category : #tests }
+CDBTest >> data [
+
+	^  {  ('Sun' -> '1 392 000, 1.9889x10^30') . ('Jupiter' -> '142 984, 1.8986x10^27') . ('Neptune' -> '49 528, 1.0243x10^26') . 
+	('Mars' -> '6 780, 6.4185x10^23')}
+	
+]
+
+{ #category : #tests }
+CDBTest >> testFind [
+
+	| values maker cdb i result |
+	values := self data.
+	maker := CDBCreator new.
+	maker start: 'test.cdb'.
+	values do: [ :v | maker addKey: v key value: v value ].
+	maker finish.
+	
+	
 	cdb := CDB new.
 	cdb createFromFile: 'test.cdb'.
-	values do: [ :v | 
-				| result |
-	          result := (cdb find: v key) asString.
-	          self assert: v value equals: result.
+	i := 1.
+	[ i <= 2 ]
+        whileTrue: [  
+	          result := (cdb find: (values at: i) key) asString.
+	          self assert: (values at: i) value equals: result.
+	          i := i + 1.
 	     ].
 	cdb close.
 ]
 
 { #category : #tests }
-CDBTest >> testFindWithDuplicatedKeys [
+CDBTest >> testFindNotInReturnsNil [
+
+	| cdb maker values result |
+	values := {  ('a' -> 'ami') . ('b' -> 'balance') . ('c' -> 'cerise') . ('d' -> 'dentiste') . ('a' -> 'ennemi') }.
+	maker := CDBCreator new.
+	maker start: 'testCerise.cdb'.
+	values do: [ :v | maker addKey: v key value: v value ].
+	maker finish.
+	
+	cdb := CDB new.
+	cdb createFromFile: 'testCerise.cdb'.
+	result := (cdb find: 'spirou'). 
+	self assert: result isNil.
+	cdb close.
+]
+
+{ #category : #tests }
+CDBTest >> testFindWithDuplicatedKeysOnlyGetTheLatest [
 
 	| cdb maker values result |
 	values := {  ('a' -> 'ami') . ('b' -> 'balance') . ('c' -> 'cerise') . ('d' -> 'dentiste') . ('a' -> 'ennemi') }.
@@ -136,45 +165,29 @@ CDBTest >> testFindWithDuplicatedKeys [
 	cdb createFromFile: 'testCerise.cdb'.
 	result := (cdb find: 'a'). 
 	self assert: result asString equals: 'ennemi'.
+	result := (cdb find: 'a'). 
+	self assert: result asString equals: 'ennemi'.
 	cdb close.
 ]
 
 { #category : #tests }
 CDBTest >> testFindWithbetterIteratingLogic [
 
-	| cdb maker values |
-	values := {  ('a' -> 'ami') . ('b' -> 'balance') . ('c' -> 'cerise') . ('d' -> 'dentiste')}.
+	| values maker cdb |
+	values := self data.
 	maker := CDBCreator new.
 	maker start: 'test.cdb'.
 	values do: [ :v | maker addKey: v key value: v value ].
 	maker finish.
 	
-	
 	cdb := CDB new.
 	cdb createFromFile: 'test.cdb'.
-	
 	values do: [ :v | 
 				| result |
 	          result := (cdb find: v key) asString.
 	          self assert: v value equals: result.
 	     ].
 	cdb close.
-]
-
-{ #category : #tests }
-CDBTest >> testNextElement [
-
-	| em element |
-	em := OldCdbEnumeration new.
-	em initializeWithByteArray: self class cdbFileContents base64Decoded readStream.
-	element := em nextElement.
-	self assert: element key asString equals: 'three'.
-	self assert: element data asString equals: 'Golden State Warriors'.
-	
-	element := em nextElement.
-	self assert: element key asString equals: 'four'.
-	self assert: element data asString equals: 'Record of Chicago Bulls'.
-
 ]
 
 { #category : #tests }
@@ -186,7 +199,7 @@ CDBTest >> testReadFile [
 		writeStreamDo: [ :stream | 
 			stream nextPutAll: self class encodedCDBFileContents ].
 		
-	em := OldCdbEnumeration new.
+	em := CDBDumper new.
 	em initializeWithByteArray: (testingWorkingDirectory / self class cdbFile) contents base64Decoded.
 	element := em nextElement.
 	self assert: element key asString equals: 'three'.
@@ -207,7 +220,7 @@ CDBTest >> testReadFile2 [
 		writeStreamDo: [ :stream | 
 			stream nextPutAll: self class encodedCDBFileContents ].
 		
-	em := OldCdbEnumeration new.
+	em := CDBDumper new.
 	em initializeWithByteArray: (testingWorkingDirectory / self class cdbFile) contents base64Decoded.
 	element := em nextElement.
 	self assert: element key asString equals: 'three'.
@@ -223,7 +236,7 @@ CDBTest >> testReadFile2 [
 CDBTest >> testReadFromByteArray [
 
 	| em element |
-	em := OldCdbEnumeration new.
+	em := CDBDumper new.
 	em initializeWithByteArray: self class cdbFileContents base64Decoded.
 	element := em nextElement.
 	self assert: element key asString equals: 'three'.

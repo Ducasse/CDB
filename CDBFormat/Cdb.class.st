@@ -17,7 +17,7 @@ Class {
 		'khash',
 		'kpos'
 	],
-	#category : #'CDBFormat-NewCore'
+	#category : #'CDBFormat-CDB'
 }
 
 { #category : #utilities }
@@ -25,7 +25,7 @@ CDB class >> dumpByteArrayOnTranscript: aByteArray [
 	"self dumpByteArrayOnTranscript: 'bXlGcm9tUHl0aG9uSW1wbGVtZW50YXRpb24uY2Ri' base64Decoded"
 
 	| em |
-	em := OldCdbEnumeration new.
+	em := CDBDumper new.
 	em initializeWithByteArray: aByteArray.
 	em dump
 ]
@@ -36,7 +36,8 @@ CDB class >> dumpFileOnTranscript: aFileName [
 	"self dumpFileOnTranscript: 'testTwoSimilarKeys.cdb'"
 
 	| em |
-	em := OldCdbEnumeration new: aFileName.
+	em := CDBDumper new.
+	em initializeWithFilePath: aFileName.
 	em dump
 ]
 
