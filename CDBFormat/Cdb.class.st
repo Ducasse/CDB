@@ -21,17 +21,23 @@ Class {
 }
 
 { #category : #utilities }
-CDB class >> dumpOnTranscript: aFileName [
-	"self dumpOnTranscript: 'myFromPythonImplementation.cdb'"
-	"self dumpOnTranscript: 'testTwoSimilarKeys.cdb'"
+CDB class >> dumpByteArrayOnTranscript: aByteArray [
+	"self dumpByteArrayOnTranscript: 'bXlGcm9tUHl0aG9uSW1wbGVtZW50YXRpb24uY2Ri' base64Decoded"
 
-	| em cdbElt |
+	| em |
+	em := OldCdbEnumeration new.
+	em initializeWithByteArray: aByteArray.
+	em dump
+]
+
+{ #category : #utilities }
+CDB class >> dumpFileOnTranscript: aFileName [
+	"self dumpFileOnTranscript: 'myFromPythonImplementation.cdb'"
+	"self dumpFileOnTranscript: 'testTwoSimilarKeys.cdb'"
+
+	| em |
 	em := OldCdbEnumeration new: aFileName.
-	[ em hasMoreElements ]
-		whileTrue: [ cdbElt := em nextElement.
-			Transcript
-				show: cdbElt printString;
-				cr ]
+	em dump
 ]
 
 { #category : #utils }
@@ -58,8 +64,7 @@ CDB >> computePosition [
 { #category : #utils }
 CDB >> createFromFile: aFileName [
 
-	file := FileStream readOnlyFileNamed: aFileName.
-	file binary.
+	file := (File named: aFileName asFileReference fullName) readStream.
 	table := ByteArray new: 2048.
 	file readInto: table startingAt: 1 count: 2048.
 	self createFromTable: table. 

@@ -22,6 +22,17 @@ OldCdbEnumeration class >> new: aFilepath [
 		yourself
 ]
 
+{ #category : #inspection }
+OldCdbEnumeration >> dump [ 
+
+	[ self hasMoreElements ]
+		whileTrue: [ 
+			| cdbElt | cdbElt := self nextElement.
+			Transcript
+				show: cdbElt printString;
+				cr ]
+]
+
 { #category : #'modal control' }
 OldCdbEnumeration >> finalize [
 

@@ -1,7 +1,7 @@
 Class {
 	#name : #OldCDBEnumTest,
 	#superclass : #TestCase,
-	#category : #'CDBFormat-Test-Old'
+	#category : #'CDBFormat-Test-New'
 }
 
 { #category : #helpers }
@@ -76,8 +76,8 @@ OldCDBEnumTest >> testOneEnumaration [
  	[ cdbEnum hasMoreElements ] 
       whileTrue: [
 			  result := cdbEnum nextElement.
-			  self assert: (keys at: i) = result key asString.
-			  self assert: (values at: i) = result data asString.
+			  self assert: (keys at: i) equals: result key asString.
+			  self assert: (values at: i) equals: result data asString.
 			  i := i + 1.
 	   ]
 ]
@@ -104,5 +104,5 @@ OldCDBEnumTest >> testOneHasMoreElement [
 	       expectedSize := expectedSize + 1.
 	   ].
 
-	self assert: (keys size) = expectedSize
+	self assert: keys size equals: expectedSize
 ]
