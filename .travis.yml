@@ -8,13 +8,10 @@ os:
 
 # Select compatible Smalltalk image(s)
 smalltalk:
-
-  - Pharo32-8.0
   - Pharo-7.0
-  - Pharo-6.1
-
-  - Pharo64-8.0
   - Pharo64-7.0
+  - Pharo32-8.0
+  - Pharo64-8.0
 
 #  - GemStone-3.3.0
 #  - GemStone-3.2.12
