@@ -14,7 +14,7 @@ BaselineOfCDB >> baseline: spec [
 			spec
 				package: 'CDBFormat'. 
 			spec
-				package: 'CDBFormat-Tests'
+				package: 'CDBFormat-Test'
 				with: [ spec requires: #('CDBFormat') ].
 			 ]
 ]
